@@ -1,0 +1,57 @@
+Why React?
+
+6
+
+7
+
+Problems React Solves
+
+History of React
+
+8
+
+SPA vs MPA
+
+9
+
+React Elements
+
+10
+
+ReactDOM
+
+11
+
+Virtual DOM
+
+12
+
+Reconciliation
+
+13
+
+Diffing Algorithm
+
+14
+
+Render Phase
+
+15
+
+Commit Phase
+
+16
+
+React Fiber Architecture
+
+17
+
+JSX
+
+18
+
+- Babel/OXC
+
+19
+
+- Vite Introduction
