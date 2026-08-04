@@ -252,6 +252,7 @@ const App = () => {
   }
 ]);
 
+
   return (
     <div className='bg-[#161616] h-full flex flex-wrap gap-2 p-4'>
       {productData.map((product)=>{
