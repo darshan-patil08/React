@@ -4,15 +4,15 @@ const FormCard = () => {
 
 const [FormData, setFormData] = useState({});
 
-
-
 let handleChange = (e)=>{
-let {name, value} = e.target;
-  setFormData({
-    ...FormData,
-    [name]: value,
-  })
+  const { name, value } = e.target;
+  setFormData(prevState => ({
+    ...prevState,
+    [name]: value
+  }));
 };
+
+
   console.log(FormData)
   return (
     <div className="flex p-5 flex-col gap-4">
@@ -27,6 +27,6 @@ let {name, value} = e.target;
     </div>
 
   )
-}
+};
 
 export default FormCard
