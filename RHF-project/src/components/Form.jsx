@@ -1,21 +1,26 @@
 import { useForm } from 'react-hook-form'
+import { nanoid } from 'nanoid'
 
-const Form = ({ setUser, setToggle, user }) => {
+const Form = ({ user, setUser, setToggle, updateUser }) => {
  const { register, handleSubmit,reset, formState: { errors } } = useForm({
     mode: 'onChange',
-    defaultValues :{
-        name: '',
-        email: '',
-        phone: '',
-        image: ''
-    }
+    defaultValues: updateUser,
  })
-
+ 
  
  const onSubmit = (data) => {
-    
-    setUser(prev => [...prev, data])
-   
+
+if(updateUser){
+ setUser(prev => prev.map(item => item.id === updateUser.id ? {...data} : item))
+  localStorage.setItem('user', JSON.stringify(user.map(item => item.id === updateUser.id ? {...data} : item)))
+
+}else{
+  let arr = [...user, {...data, id: nanoid()}]
+    setUser(arr)
+   localStorage.setItem('user', JSON.stringify(arr))
+}
+
+  
     reset()
     setToggle(prev => !prev)
   }
@@ -33,7 +38,7 @@ const Form = ({ setUser, setToggle, user }) => {
             <label htmlFor="name" className="mb-2 block text-sm font-semibold text-gray-700">
               Name
             </label>
-            <input defaultValue={user.name} id="name" type="text"
+            <input id="name" type="text"
             {...register('name', { required: 'Name is required', 
             minLength:{ 
                 value: 8, 
@@ -54,7 +59,7 @@ const Form = ({ setUser, setToggle, user }) => {
             <label htmlFor="phone" className="mb-2 block text-sm font-semibold text-gray-700">
               Phone No
             </label>
-            <input defaultValue={user.phone} id="phone" type="tel" {...register('phone', { 
+            <input id="phone" type="tel" {...register('phone', { 
                 required: 'Phone number is required', 
                 minLength:{ value: 10, message: 'Minimum 10 digits required' }, 
                 maxLength:{ value: 10, message: 'Maximum 10 digits required' } 
@@ -69,7 +74,7 @@ const Form = ({ setUser, setToggle, user }) => {
             <label htmlFor="email" className="mb-2 block text-sm font-semibold text-gray-700">
               Email
             </label>
-            <input defaultValue={user.email} id="email" type="email" {...register('email', { required: 'Email is required', 
+            <input id="email" type="email" {...register('email', { required: 'Email is required', 
             pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, 
             message: 'Invalid email format' } })} 
             placeholder="Enter your email" 
@@ -81,7 +86,7 @@ const Form = ({ setUser, setToggle, user }) => {
             <label htmlFor="image" className="mb-2 block text-sm font-semibold text-gray-700">
               Image URL
             </label>
-            <input defaultValue={user.image}
+            <input
               id="image"
               type="url"
               {...register('image', { required: 'Image URL is required', 

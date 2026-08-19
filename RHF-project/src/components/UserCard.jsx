@@ -1,4 +1,4 @@
-const UserCard = ({  setToggle, setSelectedUser, user }) => {
+const UserCard = ({ idx, deletedUser,setUpdateUser,  setToggle, user }) => {
   const { name, email, phone, image } = {
     name: user.name,
     email: user.email,
@@ -6,10 +6,7 @@ const UserCard = ({  setToggle, setSelectedUser, user }) => {
     image: user.image,
   }
 
-  const handleClick = () => {
-    setToggle(prev => !prev)
-    setSelectedUser(user)
-  }
+  
 
   return (
     <aside className="w-72 rounded-3xl border  border-gray-200 bg-white p-5 shadow-xl shadow-indigo-100/70">
@@ -25,8 +22,18 @@ const UserCard = ({  setToggle, setSelectedUser, user }) => {
         <p className="mt-1 text-base font-medium text-gray-600">{phone}</p>
 
         <div className="flex justify-between gap-2">
-          <button className="bg-green-500 text-white px-4 py-2 rounded-md" onClick={() => handleClick()}>Update</button>
-          <button className="bg-red-500 text-white px-4 py-2 rounded-md" onClick={() => setToggle(prev => !prev)}>Delete</button>
+          <button className="cursor-pointer bg-green-500 text-white px-4 py-2 rounded-md"
+           onClick={() =>{
+            setToggle(prev => !prev)
+            setUpdateUser(user)
+            
+          }}>Update</button>
+
+          <button className="bg-red-500 cursor-pointer text-white px-4 py-2 rounded-md" 
+          onClick={() =>{
+            deletedUser(idx)
+          }}>Delete</button>
+
         </div>
       </div>
     </aside>

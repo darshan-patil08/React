@@ -15,7 +15,11 @@ const NavBar = ({  setToggle }) => {
         <a href="#" className="transition hover:text-indigo-600">CONTACT</a>
       </div>
 
-      <button onClick={() => setToggle(prev => !prev) } className="rounded-full bg-indigo-600 px-5 py-2.5 text-sm font-semibold text-white shadow-md transition hover:bg-indigo-500">
+      <button onClick={() =>{
+        
+        setToggle(prev => !prev)
+        
+      }} className="rounded-full bg-indigo-600 px-5 py-2.5 text-sm font-semibold text-white shadow-md transition hover:bg-indigo-500">
         ADD USER
       </button>
     </nav>
