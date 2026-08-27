@@ -1,10 +1,17 @@
 import {useNavigate} from 'react-router'
+import {useForm} from 'react-hook-form'
 
 
 const Register = () => {
     
+    const {register, handleSubmit, reset,formState: {errors}} = useForm()
     
     const navigate = useNavigate()
+
+    const onSubmit = (data) => {
+        console.log(data)
+        reset()
+    }
 
 
   return (
@@ -23,7 +30,7 @@ const Register = () => {
         </div>
 
         {/* Register Form */}
-        <form className="space-y-5">
+        <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
 
           {/* Full Name */}
           <div>
@@ -35,11 +42,14 @@ const Register = () => {
             </label>
 
             <input
+              {...register('fullName', {required: 'Full Name is required', trim: true, minLength: {value: 2, message: 'Full Name must be at least 2 characters'}, maxLength: {value: 20, message: 'Full Name must be at most 20 characters'} ,pattern: {value: /^[a-zA-Z]+$/, message: 'Full Name must contain only letters'}})}
               id="fullName"
               type="text"
               placeholder="John Doe"
               className="w-full rounded-lg border border-[#292b29] bg-[#121412] px-4 py-3 text-sm text-white placeholder:text-gray-600 outline-none transition focus:border-[#12d329eb]"
+           
             />
+             {errors.fullName && <p className="text-red-500 text-sm">{errors.fullName.message}</p>}
           </div>
 
           {/* Email */}
@@ -52,11 +62,17 @@ const Register = () => {
             </label>
 
             <input
+            {...register('email', {required: 'Email is required', pattern: {value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: 'Invalid email address',
+                trim: true,
+                lowercase: true,
+                required: true
+              }})}
               id="email"
               type="email"
               placeholder="you@example.com"
               className="w-full rounded-lg border border-[#292b29] bg-[#121412] px-4 py-3 text-sm text-white placeholder:text-gray-600 outline-none transition focus:border-[#12d329eb]"
             />
+            {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
           </div>
 
           {/* Password */}
@@ -64,16 +80,22 @@ const Register = () => {
             <label
               htmlFor="password"
               className="mb-2 block text-sm font-medium text-gray-300"
+
             >
               Password
             </label>
 
             <input
+            {...register('password', {required: 'Password is required', trim: true, minLength: {value: 8, message: 'Password must be at least 8 characters'}, 
+              maxLength: {value: 20, message: 'Password must be at most 20 characters'}, 
+              pattern: {value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/, 
+                message: 'Password must contain at least one uppercase letter, one lowercase letter, one number and one special character'}})}
               id="password"
               type="password"
               placeholder="Create a password"
               className="w-full rounded-lg border border-[#292b29] bg-[#121412] px-4 py-3 text-sm text-white placeholder:text-gray-600 outline-none transition focus:border-[#12d329eb]"
             />
+            {errors.password && <p className="text-red-500 text-sm">{errors.password.message}</p>}
           </div>
 
           {/* Register Button */}
