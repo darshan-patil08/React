@@ -1,13 +1,27 @@
+
+
 import {useNavigate} from 'react-router'
 import {useForm} from 'react-hook-form'
-
+import { useContext } from 'react'
+import {Auth} from '../context/AuthContext'
+  import { toast } from 'react-toastify';
 const Login = () => {
 
+    const {registeredUser, setLoginUser} = useContext(Auth)
     const navigate = useNavigate()
     const {register, handleSubmit, reset,formState: {errors}} = useForm()
-
+     
     const onSubmit = (data) => {
-        console.log(data)
+        const user = registeredUser.find(user => user.email === data.email && user.password === data.password);
+        if (!user) {
+            toast.error('Invalid email or password. Please try again.');
+            reset()
+            return;
+        }
+        setLoginUser(user)
+        localStorage.setItem('loginUser', JSON.stringify(user))
+        toast.success('Login successful! Welcome back.')
+        navigate('/main')
         reset()
     }
 
@@ -78,7 +92,7 @@ const Login = () => {
                 required: 'Password is required', 
                 minLength: {value: 6, 
                 message: 'Password must be at least 6 characters'},
-                pattern: {value: /^[a-zA-Z0-9]+$/, message: 'Password must contain only letters and numbers'}
+                pattern: {value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/, message: 'Password must contain at least 1 uppercase letter, 1 lowercase letter, 1 number, 1 special character, and be at least 8 characters long'},
               })}
               
             />
