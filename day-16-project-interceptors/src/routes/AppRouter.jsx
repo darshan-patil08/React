@@ -4,9 +4,12 @@ import AuthLayout from "../layouts/AuthLayout";
 import Login from "../components/Login";
 import Register from "../components/Register";
 import MainLayout from "../layouts/MainLayout";
-import Home from "../components/Home";
+
 import ProtectedRoute from "./ProtectedRoute";
 import PublicRoute from "./PublicRoute";
+import HomePage from "../pages/HomePage";
+import ProductsPage from "../pages/ProductsPage";
+import UserPage from "../pages/UserPage";
 
 const AppRouter = () => {
   const router = createBrowserRouter([
@@ -37,11 +40,23 @@ const AppRouter = () => {
         {
           path: "",
           element: <MainLayout />,
+          children: [
+            {
+              path: "",
+              element: <HomePage />,
+            },
+            {
+              path: "Products",
+              element: <ProductsPage />,
+            },
+            {
+              path: "Users",
+              element: <UserPage />,
+            }
+          ]
         },
-        {
-          path: "/main/home",
-          element: <Home />,
-        },
+
+      
       ],
     },
   ]);

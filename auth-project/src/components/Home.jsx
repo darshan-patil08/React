@@ -2,10 +2,12 @@ import { NavLink, useNavigate } from "react-router"
 
 const Home = () => {
   const navigate = useNavigate();
+  console.log('User logged out');
 
   const handleLogout = () => {
     localStorage.removeItem('loginUser');
     navigate('/');
+    
   }
 
   return (
