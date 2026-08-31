@@ -1,11 +1,20 @@
-import { NavLink, useLocation } from 'react-router';
+import { useContext } from 'react';
+import {  NavLink } from 'react-router';
+import { Auth } from '../context/AuthContext';
+import { toast } from 'react-toastify';
 
 const NavBar = () => {
 
-        let data = useLocation();
+  const {setLoginUser} = useContext(Auth);
 
+  const handleLogout = () => {
+    localStorage.removeItem('loginUser');
+    toast.warn('Logged out successfully', { position: 'top-right' });
+    setLoginUser(null);
+  }
+        
   return (
-    <div>
+    <div className='bg-[#f5f5f5] flex grid grid-cols-[1fr_6fr]  h-screen overflow-auto'>
               <nav  className='bg-amber-500 p-4 flex flex-col border border-r-black border-2 h-full  justify-between gap-4'>
         <div className='flex flex-col gap-10'>
           <h1 className="text-3xl  font-semibold text-white">E-Commerce</h1>
@@ -17,7 +26,7 @@ const NavBar = () => {
         </div>
       
       <div>
-        <button className="bg-[#d31212eb] text-white px-4 py-2 rounded-lg hover:bg-[#12d329eb]/90 transition">Logout</button>
+        <button className="bg-[#d31212eb] text-white px-4 py-2 rounded-lg hover:bg-[#12d329eb]/90 transition" onClick={handleLogout}>Logout</button>
       </div>
       </nav>
     </div>

@@ -1,25 +1,9 @@
-import {useNavigate} from 'react-router'
-import {useForm} from 'react-hook-form'
-import {Auth} from '../context/AuthContext'
-import {useContext} from 'react'
-import { toast } from 'react-toastify';
+import { useAuth } from '../hooks/useAuth';
 
 const Register = () => {
     
-    const {registeredUser, setRegisteredUser} = useContext(Auth)
-
-    const {register, handleSubmit, reset,formState: {errors}} = useForm()
-    
-    const navigate = useNavigate()
-
-    const onSubmit = (data) => {
-      let arr = [...registeredUser, data]
-      setRegisteredUser(arr)
-      localStorage.setItem('registeredUser', JSON.stringify(arr))
-      navigate('/')
-        toast.success('Registration successful! Please login to continue.')
-        reset()
-    }
+  const {register, handleSubmit, navigate, errors, registerFormSubmit } = useAuth();
+ 
 
 
   return (
@@ -38,7 +22,7 @@ const Register = () => {
         </div>
 
         {/* Register Form */}
-        <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
+        <form className="space-y-5" onSubmit={handleSubmit(registerFormSubmit)}>
 
           {/* Full Name */}
           <div>

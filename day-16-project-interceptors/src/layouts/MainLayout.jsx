@@ -6,7 +6,7 @@ const MainLayout = () => {
     <div className='bg-[#f5f5f5] flex grid grid-cols-[1fr_6fr] min-h-screen'>
       <NavBar />
 
-  <div className="p-4 h-full">
+  <div className="p-4 h-screen overflow-auto">
       <Outlet />
        </div>              
 

@@ -1,30 +1,11 @@
+import { useAuth } from '../hooks/useAuth';
 
-
-import {useNavigate} from 'react-router'
-import {useForm} from 'react-hook-form'
-import { useContext } from 'react'
-import {Auth} from '../context/AuthContext'
-  import { toast } from 'react-toastify';
 const Login = () => {
     console.log('Login: Rendering Login');
 
-    const {registeredUser, setLoginUser} = useContext(Auth)
-    const navigate = useNavigate()
-    const {register, handleSubmit, reset,formState: {errors}} = useForm()
-     
-    const onSubmit = (data) => {
-        const user = registeredUser.find(user => user.email === data.email && user.password === data.password);
-        if (!user) {
-            toast.error('Invalid email or password. Please try again.');
-            reset()
-            return;
-        }
-        setLoginUser(user)
-        localStorage.setItem('loginUser', JSON.stringify(user))
-        toast.success('Login successful! Welcome back.')
-        navigate('/main')
-        reset()
-    }
+
+    const {register, handleSubmit, navigate, errors, loginFormSubmit, } = useAuth()
+    
 
   return (
     <div className="min-h-screen bg-[#0c0d0c] flex items-center justify-center px-4">
@@ -41,7 +22,7 @@ const Login = () => {
         </div>~
 
         {/* Login Form */}
-        <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
+        <form className="space-y-5" onSubmit={handleSubmit(loginFormSubmit)}>
 
           {/* Email */}
           <div>
