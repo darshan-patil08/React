@@ -10,6 +10,11 @@ const App = () => {
 
   const [ProductsData, setProductsData] = useState([])
 
+  // eslint-disable-next-line no-unused-vars
+  const [scrollY, setScrollY] = useState(0);
+
+
+
   const fetchProducts = async () => {
     try {
       const response = await API.get('/products')
@@ -36,6 +41,33 @@ let filteredProducts = ()=>{
 }
 
 //--------------------------------------------------------------
+//throttling effect just a demo
+  let throttle = false;
+useEffect(() => {
+  let throttleTimeout = () => {
+    if (throttle) return;
+
+    // eslint-disable-next-line react-hooks/immutability
+    throttle = true;
+    console.log('Scroll Y:', window.scrollY);
+    setScrollY(window.scrollY);
+    setTimeout(() => {
+      throttle = false;
+    }, 10000);
+
+    
+
+  } 
+window.addEventListener('scroll', throttleTimeout);
+  return () => {
+    window.removeEventListener('scroll', throttleTimeout);
+  }
+}, [])
+
+
+
+
+
 
 //debouncing effect for search input change
 useEffect(() => {
