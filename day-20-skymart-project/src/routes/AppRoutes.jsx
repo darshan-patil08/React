@@ -4,13 +4,38 @@ import LoginPage from "../pages/LoginPage";
 import Registration from "../pages/Registration";
 import MainLayout from "../layouts/MainLayout";
 import HomePage from "../pages/HomePage";
+import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { addUser } from "../features/authSlice";
+import { useEffect } from "react";
+import PublicProtected from "./Protected/PublicProtected";
+import MainProtected from "./Protected/MainProtected";
 const AppRoutes = () => {
+    const dispatch = useDispatch();
+const hydrateUser = () =>{   
+    const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+ 
+    if(!loggedInUser){
+        toast.error("YOU ARE UNAUTHORIZED TO ACCESS THIS PAGE. PLEASE LOGIN FIRST.");
+        return null;
+    }
+    dispatch(addUser(loggedInUser));
+}   
+   
+
+useEffect(() => {
+    hydrateUser();
+    }, []);   
+
   const router = createBrowserRouter([
-    // Define your routes here
+    
     {
         path: '/',
-        element: <AuthLayout />,
-        children: [
+        element : <PublicProtected/>,
+        children : [{
+            path: '',
+            element: <AuthLayout />,
+             children: [
             {
                 path: '',
                 element : <LoginPage/>
@@ -20,13 +45,19 @@ const AppRoutes = () => {
                 element : <Registration/>
             }
         ]
+    }
+    ]
     },
     {
-        path: "home",
-        element : <MainLayout/>,
+        path: '/main',
+        element : <MainProtected/>,
         children : [{
             path : '',
-            element : <HomePage/>
+            element : <MainLayout/>,
+            children : [{
+                path : '',
+                element : <HomePage/>
+            }]
         }]
     }
   ]);

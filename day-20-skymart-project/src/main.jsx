@@ -3,7 +3,7 @@ import './index.css'
 import { Provider } from 'react-redux'
 import { store } from './store/store'
 import AppRoutes from './routes/AppRoutes'
-import {ToastContainer} from "@/components/ui/toast"
+import {ToastContainer} from "react-toastify"
 
 createRoot(document.getElementById('root')).render(
     <Provider store={store}>
