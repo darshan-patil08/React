@@ -5,6 +5,7 @@
         "firstname",
         "firstname,",
         "Instence",
-        "lastname"
+        "lastname",
+        "registerd"
     ]
 }
