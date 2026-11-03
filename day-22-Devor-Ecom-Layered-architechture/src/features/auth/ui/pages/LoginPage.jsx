@@ -19,30 +19,24 @@ const LoginPage = () => {
           {/* User Name */}
           <div>
             <label
-              htmlFor="email"
               className="mb-2 block text-sm font-medium text-gray-700"
             >
               User Name
             </label>
 
-            <input
-              {...register("userName",
-                 {
-                   required: true,
-                   pattern: /^[a-zA-Z0-9_]+$/,
-                   message: "Please enter a valid user name",
-                   maxLength: { value: 50, message: "User must be at most 50 characters long" },
-               })}
-              type="text"
-              autoComplete="email"
-              id="email"
-              name="email"
-              placeholder="Enter your email"
-              className="w-full rounded-lg border border-gray-300 px-4 py-3 text-sm outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
-            />
-            {errors.userName && 
+       <input className='w-full rounded-lg border border-gray-300 px-4 py-3 text-sm outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100' 
+       {...register("username",
+       { 
+         required: true,
+         message: "Please enter a valid user name",
+         maxLength: { value: 50, message: "User must be at most 50 characters long" },
+       })}
+       type="text"
+        id="username"
+        placeholder='Enter Your Username ' />
+            {errors.username &&
               <span className="text-red-500 text-sm">
-                {errors.userName.message}
+                {errors.username.message}
               </span>
             }
           </div>
@@ -60,12 +54,11 @@ const LoginPage = () => {
               {...register("password", 
                 { 
                   required: true, 
-                  minLength: { value: 6, message: "Password must be at least 6 characters long" }, maxLength: { value: 12, message: "Password must be at most 12 characters long" }, pattern: /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,12}$/,
+               
                   message: "Password must contain at least 6 characters, including uppercase, lowercase, and special characters" 
                 })}
               type="password"
               id="password"
-              name="password"
               placeholder="Enter your password"
               className="w-full rounded-lg border border-gray-300 px-4 py-3 text-sm outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
               autoComplete="current-password"
