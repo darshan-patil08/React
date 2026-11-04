@@ -1,11 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { loginUserAction } from './authActions';
 
 const authSlice = createSlice({
   name: 'auth',
   initialState: {
     user : null,
     isAuthenticated : false,
-    isLoading : true,
+    isLoading : false,
   },
   reducers: {
     addUser : (state, action) => {
@@ -18,6 +19,21 @@ const authSlice = createSlice({
       state.isAuthenticated = false;
       state.isLoading = true;
     }
+  },
+  extraReducers: (builder) => {
+    builder.addCase(loginUserAction.pending, (state,action) => {
+      state.isLoading = true;
+    })
+    .addCase(loginUserAction.fulfilled, (state,action) => {
+      state.user = action.payload;
+      state.isAuthenticated = true;
+      state.isLoading = false;
+    })
+    .addCase(loginUserAction.rejected, (state,action) => {
+      state.user = null;
+      state.isAuthenticated = false;
+      state.isLoading = false;
+    })
   }
 })
 

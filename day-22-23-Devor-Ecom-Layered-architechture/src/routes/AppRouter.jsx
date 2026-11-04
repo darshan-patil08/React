@@ -18,18 +18,18 @@ const AppRouter = () => {
 
 let dispatch = useDispatch();
 
-useEffect(() => {
-(async()=>{
-    try{
-        const userData = await hydrateUser();
-        dispatch(addUser(userData));
-        return userData;
+// useEffect(() => {
+// (async()=>{
+//     try{
+//         const userData = await hydrateUser();
+//         dispatch(addUser(userData));
+//         return userData;
 
-    }catch(err){
-        console.log("Error in AppRouter", err);
-    }
-})()
-}, [])
+//     }catch(err){
+//         console.log("Error in AppRouter", err);
+//     }
+// })()
+// }, [])
 
     const router = createBrowserRouter([
         {

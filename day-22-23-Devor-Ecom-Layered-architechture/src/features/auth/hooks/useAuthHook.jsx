@@ -1,9 +1,8 @@
 import { useForm } from 'react-hook-form';
 import {useNavigate} from 'react-router'
-import { loginUserApi } from '../api/authApi';
 import { useDispatch } from 'react-redux';
-import { addUser } from '../state/authSlice';
 import { toast } from 'react-toastify';
+import { loginUserAction } from '../state/authActions';
 
 export  const useAuth = () => {
 
@@ -15,13 +14,11 @@ export  const useAuth = () => {
          }
         const loginForm = async(data) => {
            try{
-            let res  = await loginUserApi(data)
-            
-            dispatch(addUser(res));
-            toast.success("Login successful");
+           dispatch(loginUserAction(data));
+           toast.success("Login Successful");
             navigate("/main");
             reset();
-            return res;
+            return data;
            }catch(err){           
              console.log("Error in loginForm", err.message);
              toast.error(err.response?.data?.message ?? err.message);
