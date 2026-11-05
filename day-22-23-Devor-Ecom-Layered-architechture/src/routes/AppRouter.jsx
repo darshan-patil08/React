@@ -10,26 +10,20 @@ import CartPage from '../features/cart/ui/pages/CartPage'
 import ProductPage from '../features/products/ui/pages/ProductPage'
 import OrderPage from '../features/orders/ui/pages/OrderPage'
 import { useEffect } from 'react'
-import { hydrateUser } from '../features/auth/api/authApi'
 import { useDispatch } from 'react-redux'
-import { addUser } from '../features/auth/state/authSlice'
+import { hydrateUser } from '../features/auth/state/authActions'
 
 const AppRouter = () => {
 
-let dispatch = useDispatch();
+const dispatch = useDispatch();
 
-// useEffect(() => {
-// (async()=>{
-//     try{
-//         const userData = await hydrateUser();
-//         dispatch(addUser(userData));
-//         return userData;
-
-//     }catch(err){
-//         console.log("Error in AppRouter", err);
-//     }
-// })()
-// }, [])
+    useEffect(()=>{
+            try {
+                dispatch(hydrateUser());
+            } catch (error) {
+                console.log("Error in hydrateUser", error.message);
+            }
+    })
 
     const router = createBrowserRouter([
         {

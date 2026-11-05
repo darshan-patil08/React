@@ -15,7 +15,6 @@ export  const useAuth = () => {
         const loginForm = async(data) => {
            try{
            dispatch(loginUserAction(data));
-           toast.success("Login Successful");
             navigate("/main");
             reset();
             return data;

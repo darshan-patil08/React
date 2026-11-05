@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { loginUserAction } from './authActions';
+import { hydrateUser, loginUserAction } from './authActions';
 
 const authSlice = createSlice({
   name: 'auth',
@@ -21,7 +21,7 @@ const authSlice = createSlice({
     }
   },
   extraReducers: (builder) => {
-    builder.addCase(loginUserAction.pending, (state,action) => {
+    builder.addCase(loginUserAction.pending, (state) => {
       state.isLoading = true;
     })
     .addCase(loginUserAction.fulfilled, (state,action) => {
@@ -29,7 +29,19 @@ const authSlice = createSlice({
       state.isAuthenticated = true;
       state.isLoading = false;
     })
-    .addCase(loginUserAction.rejected, (state,action) => {
+    .addCase(loginUserAction.rejected, (state) => {
+      state.user = null;
+      state.isAuthenticated = false;
+      state.isLoading = false;
+
+    }).addCase(hydrateUser.pending, (state) => {
+      state.isLoading = true;
+      
+    }).addCase(hydrateUser.fulfilled, (state,action) => {
+      state.user = action.payload;
+      state.isAuthenticated = true;
+      state.isLoading = false;
+    }).addCase(hydrateUser.rejected, (state) => {
       state.user = null;
       state.isAuthenticated = false;
       state.isLoading = false;
